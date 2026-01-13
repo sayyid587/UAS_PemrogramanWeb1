@@ -44,20 +44,44 @@ Sistem ini memiliki dua aktor utama: **Admin (Pustakawan)** dan **User (Anggota/
 
 ### 1. Fitur Umum
 * **Routing URL Cantik:** Menggunakan `.htaccess` untuk menyembunyikan ekstensi `.php` (URL terlihat bersih).
-```
-<IfModule mod_rewrite.c>
-    Options -Multiviews
-    RewriteEngine On
-
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
+    ```
+    <IfModule mod_rewrite.c>
+        Options -Multiviews
+        RewriteEngine On
     
-    RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
-</IfModule>
-  ```
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_FILENAME} !-f
+        
+        RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+    </IfModule>
+      ```
 
 * **Security:** Proteksi SQL Injection (PDO Binding) dan XSS Prevention.
 * **Alert System:** Notifikasi *Flasher* untuk memberi feedback sukses/gagal aksi.
+  `app/core/Flasher.php`
+  ```php
+  <?php 
+        class Flasher {
+            public static function setFlash($pesan, $aksi, $tipe)
+            {
+                $_SESSION['flash'] = [
+                    'pesan' => $pesan,
+                    'aksi'  => $aksi,
+                    'tipe'  => $tipe
+                ];
+            }
+    
+        public static function flash()
+        {
+            if( isset($_SESSION['flash']) ) {
+                echo '<div class="alert alert-' . $_SESSION['flash']['tipe'] . ' alert-dismissible fade show" role="alert">
+                        Data <strong>' . $_SESSION['flash']['pesan'] . '</strong> ' . $_SESSION['flash']['aksi'] . '
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>';
+                unset($_SESSION['flash']);
+            }
+        }
+    }
 
 ### 2. Fitur Admin
 * **Dashboard Statistik:** Melihat ringkasan jumlah buku, anggota, dan transaksi aktif.
@@ -77,10 +101,22 @@ Sistem ini memiliki dua aktor utama: **Admin (Pustakawan)** dan **User (Anggota/
 
 Berikut adalah tangkapan layar dari alur penggunaan aplikasi E-Perpus.
 
-### A. Autentikasi (Login)
+### A. Halaman Public
+halaman yang bisa di akses semua orang tanpa harus login
+
+![Halaman Login](screenshot/halaman_public.png)
+
+---
+
+### B. Autentikasi (Login)
 Halaman masuk yang dilengkapi validasi untuk membedakan hak akses Admin dan User.
 
-![Halaman Login](assets/screenshots/login.jpg)
+**Login sebagai admin:**
+![Halaman Login](screenshot/login_admin.png)
+
+**Login sebagai user:**
+![Halaman Login](screenshot/login_user.png)
+
 *Keterangan: Halaman Login dengan validasi username & password.*
 
 ---
@@ -91,61 +127,67 @@ Berikut adalah tampilan dan fitur yang hanya bisa diakses oleh Pustakawan.
 #### 1. Dashboard Admin
 Halaman utama setelah login, menampilkan ringkasan data perpustakaan.
 
-![Dashboard Admin](assets/screenshots/dashboard_admin.jpg)
+![Dashboard Admin](screenshot/dasboard_admin.png)
 
 #### 2. Manajemen Data Buku (CRUD)
 Admin dapat melihat daftar buku, menambah buku baru (upload cover), serta mengedit atau menghapus data.
 
-![Daftar Buku](assets/screenshots/data_buku.jpg)
+![Daftar Buku](screenshot/kelola_buku.png)
 *Keterangan: Tampilan daftar buku dengan fitur pencarian dan tombol aksi.*
 
-![Form Tambah Buku](assets/screenshots/tambah_buku.jpg)
+![Form Tambah Buku](screenshot/tambah_buku.png)
 *Keterangan: Modal/Form untuk input data buku baru.*
 
+![Form Tambah Buku](screenshot/edit_buku.png)
+*Keterangan: Modal/Form untuk edit data buku.*
+
 #### 3. Transaksi Peminjaman
-Proses saat Admin mencatat peminjaman buku untuk anggota. Stok buku akan berkurang otomatis.
+Proses saat Admin mencatat peminjaman buku untuk anggota, Stok buku akan berkurang otomatis. Dan mencatat pengembalian dan menghitung denda, stok buku akan bertambah kembali.
 
-![Transaksi Peminjaman](assets/screenshots/peminjaman.jpg)
+![Transaksi Peminjaman](screenshot/transaksi_admin.png)
 
-#### 4. Detail Buku
-Melihat informasi lengkap buku termasuk stok yang tersedia.
+#### 4. Anggota
+Melihat, menambahkan, dan mengedit daftar anggota.
 
-![Detail Buku](assets/screenshots/detail_buku.jpg)
+![Daftar Buku](screenshot/kelola_anggota.png)
+*Keterangan: Tampilan daftar anggota dengan fitur pencarian dan tombol aksi.*
+
+![Form Tambah Buku](screenshot/tambah_user.png)
+*Keterangan: Modal/Form untuk input data anggota baru.*
+
+![Form Tambah Buku](screenshot/edit_user.png)
+*Keterangan: Modal/Form untuk edit data anggota.*
 
 ---
 
 ### C. Hak Akses: USER (ANGGOTA)
-Berikut adalah tampilan dari sisi Mahasiswa/Anggota.
+Berikut adalah tampilan dari sisi User/Anggota.
 
-#### 1. Landing Page / Katalog Buku
-Halaman depan yang menampilkan koleksi buku perpustakaan yang bisa dicari oleh user.
+#### 1. Dashboard User
+Halaman depan yang menampilkan menu-menu yang bisa diakses oleh user.
 
-![Katalog Buku](assets/screenshots/user_home.jpg)
+![Katalog Buku](screenshot/dashboard_user.png)
 
-#### 2. Profil Member
-Halaman biodata anggota yang menampilkan informasi akun secara estetik.
+#### 2. Melihat Daftar Buku
+Halaman katalog buku yang menampilkan informasi daftar buku secara estetik, dan User juga bisa meminjam buku.
 
-![Profil User](assets/screenshots/user_profile.jpg)
+![Profil User](screenshot/katalog_buku.png)
+
+### 3. Melihat History Transaksi
+Halaman History yang menampilkan riwayat traksaksi.
+
+![Profil User](screenshot/katalog_transaksi.png)
 
 ---
 
-## 📂 Struktur Folder (MVC)
+### Profile
+Halaman informasi profile 
 
-Project ini memisahkan *Logic* (App) dan *View* (Public) demi keamanan.
+**Profile Admin:**
+![Profil User](screenshot/profile_admin.png)
 
-```text
-/
-├── app/                  # LOGIKA UTAMA (TIDAK BISA DIAKSES VIA BROWSER)
-│   ├── config/           # Konfigurasi Database & BaseURL
-│   ├── controllers/      # Pengendali alur (Jembatan View & Model)
-│   ├── core/             # Core System (App, Controller, Database Wrapper)
-│   ├── models/           # Query Database (CRUD Logic)
-│   └── views/            # File Tampilan (HTML + PHP)
-│
-├── public/               # PUBLIC ACCESS (FILE YANG DIBUKA BROWSER)
-│   ├── css/              # File Styling CSS
-│   ├── img/              # Folder penyimpanan gambar/upload
-│   ├── js/               # File JavaScript / Bootstrap JS
-│   └── index.php         # Entry Point (Gerbang Utama Aplikasi)
-│
-└── assets/               # File pendukung README (Screenshot)
+**Profile User/Anggota:**
+![Profil User](screenshot/profile_user.png)
+
+---
+**Universitas Pelita Bangsa - 2025**
