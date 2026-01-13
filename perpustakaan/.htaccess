@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+    # Options -Multiviews  <-- Kita matikan baris ini karena sering bikin error 500
+    RewriteEngine On
+
+    # Base directory (Penting buat InfinityFree kadang-kadang)
+    RewriteBase /
+
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+</IfModule>

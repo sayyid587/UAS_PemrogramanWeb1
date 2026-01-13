@@ -1,0 +1,374 @@
+/* =========================================
+   1. GLOBAL & FONT
+   ========================================= */
+body {
+  font-family: "Outfit", "Poppins", sans-serif;
+  /* Gradasi halus Fixed agar tidak gerak saat scroll */
+  background: linear-gradient(180deg, #eef2ff 30%, #c5e3ff 70%) fixed !important;
+  color: #000000;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* =========================================
+   2. CARD STYLING
+   ========================================= */
+.card {
+  border: none;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+/* Efek Card Utama (Dashboard Stats) */
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.card-header {
+  background-color: #fff;
+  border-bottom: 1px solid #f1f5f9;
+  font-weight: 600;
+  padding: 1.5rem;
+}
+
+/* =========================================
+   3. BUTTON STYLING (MODERN PILL)
+   ========================================= */
+.btn {
+  border-radius: 50px;
+  padding: 0.6rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Button Primary (Sudah Gradient) - Menggantikan .btn-gradient */
+.btn-primary {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  border: none;
+  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(37, 99, 235, 0.3);
+  color: white;
+}
+
+/* =========================================
+   4. TABLE STYLING
+   ========================================= */
+.table {
+  margin-bottom: 0;
+}
+
+.table thead th {
+  background-color: #f8fafc;
+  color: #64748b;
+  font-weight: 700;
+  border-bottom: 1px solid #e2e8f0;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  padding: 1rem;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f5f9;
+}
+
+.badge {
+  padding: 0.5em 1em;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+/* =========================================
+   5. NAVBAR STYLING (FIXED & FLOATING)
+   ========================================= */
+
+/* Wrapper Utama */
+.navbar-container {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 95%;
+  max-width: 1320px;
+  z-index: 1050;
+}
+
+/* Efek Kaca */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+  padding: 0.7rem 1rem;
+}
+
+/* Logo Gradient */
+.text-gradient {
+  background: linear-gradient(135deg, #2563eb 0%, #3aede4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.logo-icon {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #2563eb 0%, #3ac3ed 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-5deg);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+/* Menu Pills (Tengah) */
+.custom-nav-pills .nav-link {
+  color: #64748b;
+  font-weight: 500;
+  border-radius: 50px;
+  margin: 0 5px;
+  padding: 0.5rem 1.2rem !important;
+  transition: all 0.3s;
+}
+
+.custom-nav-pills .nav-link:hover {
+  background-color: rgba(37, 99, 235, 0.08);
+  color: #2563eb;
+}
+
+.custom-nav-pills .nav-link.active {
+  background-color: #2563eb;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* User Profile (Kanan) */
+.user-pill {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s;
+  padding-right: 15px;
+}
+
+.user-pill:hover,
+.user-pill[aria-expanded="true"] {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  margin-top: 10px !important;
+}
+
+/* Animasi Dropdown */
+.animate-slide-in {
+  animation: slideUpFade 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hide-arrow::after {
+  display: none !important;
+}
+
+/* =========================================
+   6. RESPONSIVE FIXES
+   ========================================= */
+@media (max-width: 991px) {
+  .navbar-container {
+    width: 95%;
+    top: 10px;
+  }
+
+  .glass-nav {
+    padding: 1rem;
+  }
+
+  .custom-nav-pills {
+    margin-top: 1rem;
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 10px;
+    width: 100%;
+  }
+
+  .custom-nav-pills .nav-link {
+    width: 100%;
+    margin: 5px 0;
+    text-align: left;
+  }
+
+  .user-pill {
+    margin-top: 10px;
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* =========================================
+   7. LOGIN PAGE STYLING
+   ========================================= */
+
+/* Background Halaman Login */
+.login-body {
+  background-color: #f3f4f6;
+  position: relative;
+  overflow: hidden;
+  font-family: "Outfit", sans-serif;
+}
+
+/* Shape Blob (Animasi Background) */
+.shape-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: -1;
+  opacity: 0.6;
+  animation: floatShape 10s infinite alternate;
+}
+
+.shape-1 {
+  width: 400px;
+  height: 400px;
+  background: #4f46e5;
+  top: -100px;
+  left: -100px;
+}
+
+.shape-2 {
+  width: 300px;
+  height: 300px;
+  background: #06b6d4;
+  bottom: -50px;
+  right: -50px;
+  animation-delay: 2s;
+}
+
+@keyframes floatShape {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(20px, 40px) scale(1.1);
+  }
+}
+
+/* Kartu Login Utama */
+.login-card {
+  width: 1000px;
+  min-height: 600px;
+  border-radius: 24px;
+  background: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Sidebar Kiri Login */
+.login-sidebar {
+  background: url("https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1350&auto=format&fit=crop");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.bg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(37, 99, 235, 0.9) 0%,
+    rgba(30, 64, 175, 0.8) 100%
+  );
+  z-index: 0;
+}
+
+/* Form Input Styling */
+.form-floating > .form-control {
+  height: 3.5rem;
+  line-height: 1.25;
+}
+
+.form-floating > label {
+  padding: 1rem 0.75rem;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  background-color: #fff !important;
+  border: 1px solid #2563eb !important;
+}
+
+/* Utilitas Hover */
+.hover-scale:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3) !important;
+}
+
+/* Animasi Masuk */
+.animate-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-fade {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 991px) {
+  .login-card {
+    margin: 20px;
+    min-height: auto;
+  }
+}
