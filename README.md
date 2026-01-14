@@ -18,10 +18,13 @@ Aplikasi **E-Perpus** adalah sistem informasi manajemen perpustakaan berbasis we
 
 ---
 
-## 🌐 Link Demo & Dokumentasi
+## 🌐 Link Demo
 
 * **🌍 Live Demo:** [http://digital-library.rf.gd](http://digital-library.rf.gd)
-* **📹 Video Dokumentasi (YouTube):** [LINK YOUTUBE KAMU DI SINI]
+
+akun:
+* Username:(user1) Password:(12345)
+* Username:(user2) Password:(54321)
 
 ---
 
